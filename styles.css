@@ -1,0 +1,912 @@
+/* ============================================================
+   Personal website — Dylan Mercury Cooper
+   styles.css
+
+   Sections:
+     1. Custom properties (design tokens for both themes)
+     2. Reset / base styles
+     3. Typography
+     4. Layout container
+     5. Site header (back link + theme toggle)
+     6. Site footer
+     7. Accessibility (reduced motion, focus styles)
+   ============================================================ */
+
+
+/* 1. Custom properties (design tokens)
+   ------------------------------------------------------------ */
+
+/* Light theme — default values */
+:root {
+    /* Colours */
+    --bg: #fcf2eb;
+    --bg-alt: #f4e8de;
+    --text: #1a1a1a;
+    --text-muted: #6a6a6a;
+    --accent: #b04a26;
+    --border: #d6c8b8;
+
+    /* Typography */
+    --font-serif: 'Newsreader', Georgia, 'Times New Roman', serif;
+    --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+
+    /* Type scale (fluid: scales between min and max based on viewport) */
+    --type-h1: clamp(2.25rem, 5vw + 1rem, 3.75rem);
+    --type-h2: clamp(1.4rem, 2vw + 0.8rem, 2rem);
+    --type-h3: clamp(1.15rem, 1vw + 0.9rem, 1.4rem);
+    --type-body: 1rem;
+    --type-small: 0.875rem;
+
+    /* Spacing scale */
+    --space-1: 0.25rem;
+    --space-2: 0.5rem;
+    --space-3: 1rem;
+    --space-4: 1.5rem;
+    --space-5: 2rem;
+    --space-6: 3rem;
+    --space-7: 4rem;
+    --space-8: 6rem;
+
+    /* Layout */
+    --container-max: 720px;
+    --container-pad: clamp(1.25rem, 4vw, 2.5rem);
+
+    /* Misc */
+    --radius: 6px;
+    --transition: 200ms ease-out;
+    --shadow-hover: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+/* Dark theme — overrides only the colour tokens */
+[data-theme="dark"] {
+    --bg: #1d1815;
+    --bg-alt: #2a221d;
+    --text: #ededed;
+    --text-muted: #9a9a9a;
+    --accent: #e89878;
+    --border: #312820;
+    --shadow-hover: 0 6px 18px rgba(0, 0, 0, 0.4);
+}
+
+
+/* 2. Reset / base styles
+   ------------------------------------------------------------ */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: var(--font-sans);
+    font-size: var(--type-body);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    transition: background-color var(--transition), color var(--transition);
+}
+
+a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    transition: color var(--transition);
+}
+
+a:hover {
+    color: var(--text);
+}
+
+button {
+    font-family: inherit;
+    color: inherit;
+}
+
+
+/* 3. Typography
+   ------------------------------------------------------------ */
+
+h1, h2, h3, h4 {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    line-height: 1.2;
+    color: var(--text);
+    margin: 0 0 var(--space-3);
+}
+
+h1 {
+    font-size: var(--type-h1);
+    letter-spacing: -0.02em;
+}
+
+h2 {
+    font-size: var(--type-h2);
+    letter-spacing: -0.01em;
+}
+
+h3 {
+    font-size: var(--type-h3);
+}
+
+p {
+    margin: 0 0 var(--space-3);
+}
+
+
+/* 4. Layout container
+   ------------------------------------------------------------ */
+
+.container {
+    flex: 1;
+    width: 100%;
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: var(--space-7) var(--container-pad) var(--space-6);
+}
+
+
+/* 5. Site header
+   ------------------------------------------------------------ */
+
+.site-header {
+    width: 100%;
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: var(--space-4) var(--container-pad) 0;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: var(--space-3);
+}
+
+.back-link {
+    margin-right: auto;
+    font-size: var(--type-small);
+    color: var(--text-muted);
+    text-decoration: none;
+}
+
+.back-link:hover {
+    color: var(--text);
+}
+
+.theme-toggle {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color var(--transition), border-color var(--transition);
+    padding: 0;
+}
+
+.theme-toggle:hover {
+    background-color: var(--bg-alt);
+    border-color: var(--text-muted);
+}
+
+.theme-toggle svg {
+    width: 18px;
+    height: 18px;
+}
+
+
+/* 6. Site footer
+   ------------------------------------------------------------ */
+
+.site-footer {
+    width: 100%;
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: var(--space-5) var(--container-pad);
+    color: var(--text-muted);
+    font-size: var(--type-small);
+    border-top: 1px solid var(--border);
+}
+
+.site-footer a {
+    color: var(--text-muted);
+}
+
+.site-footer a:hover {
+    color: var(--text);
+}
+
+
+/* 7. Hero (home page)
+   ------------------------------------------------------------ */
+
+.hero {
+    margin-bottom: var(--space-7);
+}
+
+.hero-microline {
+    font-size: 1rem;
+    color: var(--text-muted);
+    margin: 0 0 var(--space-2);
+}
+
+.hero h1 {
+    margin-top: 0;
+    margin-bottom: var(--space-4);
+}
+
+.hero-bio {
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    color: var(--text);
+    max-width: 60ch;
+    margin: 0;
+    text-align: justify;
+}
+
+
+/* 8. Featured grid (cards)
+   ------------------------------------------------------------ */
+
+.featured-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-3);
+    margin-bottom: var(--space-7);
+}
+
+@media (max-width: 720px) {
+    .featured-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-4);
+    background-color: var(--bg-alt);
+    border-radius: var(--radius);
+    text-decoration: none;
+    color: var(--text);
+    transition:
+        background-color var(--transition),
+        transform var(--transition),
+        box-shadow var(--transition);
+}
+
+.card:hover {
+    background-color: var(--border);
+    color: var(--text);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-hover);
+}
+
+.card-label {
+    font-size: var(--type-small);
+    color: var(--text-muted);
+    margin-bottom: var(--space-2);
+    letter-spacing: 0.01em;
+}
+
+.card-title {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin: 0 0 var(--space-2);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--text);
+}
+
+.card-icon {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    color: var(--accent);
+    transform: translateY(-0.1em);
+}
+
+.card-title-text {
+    flex: 1;
+}
+
+.card-arrow {
+    flex-shrink: 0;
+    font-size: 0.95em;
+    color: var(--text-muted);
+    font-weight: 400;
+}
+
+/* Pixel-art icons next to section headings */
+.heading-icon {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 0.4em;
+    color: var(--accent);
+    /* Larger upward nudge so the icon visually centres with cap-height,
+       not the descender-inclusive line-box centre */
+    transform: translateY(-0.18em);
+}
+
+h1 .heading-icon {
+    width: 28px;
+    height: 28px;
+}
+
+h2 .heading-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.card-description {
+    font-size: var(--type-small);
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin: 0;
+}
+
+
+/* 9. Contact section
+   ------------------------------------------------------------ */
+
+.contact {
+    margin-bottom: var(--space-7);
+}
+
+.contact h2 {
+    font-size: var(--type-h3);
+    margin-bottom: var(--space-3);
+}
+
+.contact p {
+    margin: 0;
+}
+
+.contact-email-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-2) var(--space-5);
+    background: transparent;
+    border: 1px solid var(--accent);
+    border-radius: var(--radius);
+    color: var(--accent);
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+    transition:
+        background-color var(--transition),
+        color var(--transition),
+        transform var(--transition),
+        box-shadow var(--transition);
+}
+
+.contact-email-btn:hover {
+    background-color: var(--accent);
+    color: var(--bg);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+}
+
+.contact-secondary {
+    margin-top: var(--space-3) !important;
+    font-size: var(--type-small);
+    color: var(--text-muted);
+}
+
+.contact-secondary a {
+    color: var(--text-muted);
+}
+
+.contact-secondary a:hover {
+    color: var(--text);
+}
+
+
+/* 10. Page intro (research-directions, music)
+   ------------------------------------------------------------ */
+
+.page-intro {
+    margin-bottom: var(--space-7);
+}
+
+.page-intro h1 {
+    margin: 0 0 var(--space-4);
+}
+
+.page-intro p {
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    color: var(--text);
+    max-width: 60ch;
+    margin: 0;
+    text-align: justify;
+}
+
+
+/* 11. Research question list
+   ------------------------------------------------------------ */
+
+.research-list {
+    margin-bottom: var(--space-7);
+}
+
+.question {
+    margin-bottom: var(--space-6);
+}
+
+.question:last-child {
+    margin-bottom: 0;
+}
+
+.question h2 {
+    font-size: clamp(1.2rem, 1.5vw + 0.8rem, 1.5rem);
+    line-height: 1.3;
+    margin: 0 0 var(--space-3);
+}
+
+.question p {
+    line-height: 1.7;
+    color: var(--text);
+    max-width: 65ch;
+    margin: 0;
+    text-align: justify;
+}
+
+.question .context-pending {
+    color: var(--text-muted);
+    font-style: italic;
+    text-align: left;
+}
+
+
+/* 12. Music page — scoring videos and track list
+   ------------------------------------------------------------ */
+
+.scoring-work {
+    margin-bottom: var(--space-7);
+}
+
+.scoring-work h2,
+.track-list h2 {
+    font-size: var(--type-h3);
+    margin-bottom: var(--space-4);
+}
+
+.scoring-intro {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--text);
+    max-width: 60ch;
+    margin: 0 0 var(--space-5);
+    text-align: justify;
+}
+
+.video-embed {
+    margin: 0 0 var(--space-5);
+    padding: 0;
+    max-width: 60ch;
+}
+
+.video-embed:last-child {
+    margin-bottom: 0;
+}
+
+.youtube-thumbnail {
+    position: relative;
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    padding: 0;
+    border: none;
+    background: var(--bg-alt);
+    border-radius: var(--radius);
+    overflow: hidden;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.youtube-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: opacity var(--transition);
+}
+
+.youtube-thumbnail:hover img {
+    opacity: 0.85;
+}
+
+.play-icon {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}
+
+.play-icon svg {
+    width: 68px;
+    height: 48px;
+    transition: transform var(--transition);
+}
+
+.youtube-thumbnail:hover .play-icon svg {
+    transform: scale(1.05);
+}
+
+/* Once the iframe replaces the thumbnail, give it the same shape */
+.scoring-work iframe {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border: none;
+    border-radius: var(--radius);
+    display: block;
+}
+
+.video-embed figcaption {
+    margin-top: var(--space-2);
+    font-size: var(--type-small);
+    color: var(--text-muted);
+}
+
+.track-list {
+    margin-bottom: var(--space-6);
+}
+
+.genre-group {
+    margin-bottom: var(--space-5);
+}
+
+.genre-group:last-of-type {
+    margin-bottom: var(--space-4);
+}
+
+.genre-heading {
+    font-family: var(--font-serif);
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    margin: 0 0 var(--space-3);
+    letter-spacing: 0.02em;
+}
+
+.track {
+    margin-bottom: var(--space-4);
+}
+
+.track:last-child {
+    margin-bottom: 0;
+}
+
+.track-title {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    font-weight: 500;
+    margin: 0 0 var(--space-2);
+}
+
+.track-list-note {
+    margin-top: var(--space-5);
+    font-size: var(--type-small);
+    color: var(--text-muted);
+    line-height: 1.6;
+    padding: var(--space-3);
+    background-color: var(--bg-alt);
+    border-radius: var(--radius);
+}
+
+.track-list-note code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.85em;
+    background-color: var(--bg);
+    padding: 1px 4px;
+    border-radius: 3px;
+}
+
+/* Bandcamp embeds */
+.bandcamp-tracks {
+    margin-bottom: var(--space-6);
+}
+
+.bandcamp-tracks h2 {
+    font-size: var(--type-h3);
+    margin-bottom: var(--space-4);
+}
+
+.bandcamp-track {
+    margin: 0 0 var(--space-5);
+    padding: 0;
+}
+
+.bandcamp-track:last-child {
+    margin-bottom: 0;
+}
+
+.bandcamp-track iframe {
+    display: block;
+    border-radius: var(--radius);
+}
+
+.bandcamp-caption {
+    margin-top: var(--space-3);
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--text);
+    max-width: 60ch;
+    text-align: justify;
+}
+
+.instagram-section {
+    margin-bottom: var(--space-6);
+}
+
+.instagram-section h2 {
+    font-size: var(--type-h3);
+    margin-bottom: var(--space-4);
+}
+
+.instagram-embed {
+    margin-bottom: var(--space-3);
+}
+
+.instagram-embed iframe {
+    display: block;
+    border-radius: var(--radius);
+    background: var(--bg-alt);
+}
+
+.instagram-more {
+    margin: 0;
+    font-size: var(--type-small);
+}
+
+.instagram-more a {
+    color: var(--text-muted);
+}
+
+.instagram-more a:hover {
+    color: var(--text);
+}
+
+
+/* Custom audio player
+   ------------------------------------------------------------
+   Generated by JS (class AudioPlayer) for each <audio class="audio-player">.
+   Layout: play button | progress bar | time | mute | volume slider
+*/
+
+.custom-audio {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-2) var(--space-3);
+    background: var(--bg-alt);
+    border-radius: var(--radius);
+}
+
+.custom-audio-play {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--text);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color var(--transition), color var(--transition), border-color var(--transition);
+}
+
+.custom-audio-play:hover {
+    background: var(--text);
+    color: var(--bg);
+    border-color: var(--text);
+}
+
+.custom-audio-play svg {
+    width: 14px;
+    height: 14px;
+    /* Slight nudge so play triangle looks centred */
+    margin-left: 1px;
+}
+
+.custom-audio-play[data-state="playing"] svg {
+    margin-left: 0;
+}
+
+/* Progress bar */
+.custom-audio-progress {
+    flex: 1;
+    min-width: 0;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+}
+
+.custom-audio-progress::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    background: var(--text);
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+    transition: transform var(--transition);
+}
+
+.custom-audio-progress:hover::-webkit-slider-thumb {
+    transform: scale(1.15);
+}
+
+.custom-audio-progress::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    background: var(--text);
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+}
+
+/* Time display */
+.custom-audio-time {
+    flex-shrink: 0;
+    font-size: var(--type-small);
+    color: var(--text-muted);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+/* Mute button */
+.custom-audio-volume-btn {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: color var(--transition);
+}
+
+.custom-audio-volume-btn:hover {
+    color: var(--text);
+}
+
+.custom-audio-volume-btn svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* Volume slider */
+.custom-audio-volume {
+    flex-shrink: 0;
+    width: 60px;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+}
+
+.custom-audio-volume::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    background: var(--text-muted);
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+}
+
+.custom-audio-volume::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    background: var(--text-muted);
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+}
+
+/* Focus styles for keyboard accessibility */
+.custom-audio-play:focus-visible,
+.custom-audio-volume-btn:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+.custom-audio-progress:focus-visible,
+.custom-audio-volume:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+    border-radius: 2px;
+}
+
+/* Mobile — let the volume slider wrap if space is tight */
+@media (max-width: 540px) {
+    .custom-audio {
+        flex-wrap: wrap;
+        gap: var(--space-2);
+    }
+    .custom-audio-progress {
+        order: 4;
+        width: 100%;
+        flex-basis: 100%;
+    }
+}
+
+
+/* 13. Footer links
+   ------------------------------------------------------------ */
+
+.footer-links {
+    display: flex;
+    gap: var(--space-2);
+    align-items: center;
+    margin: 0;
+}
+
+.footer-divider {
+    color: var(--border);
+}
+
+
+/* 11. Accessibility
+   ------------------------------------------------------------ */
+
+/* Visible focus ring — applies to keyboard navigation, hidden for mouse clicks */
+:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 2px;
+}
+
+/* Respect users who prefer reduced motion — disable transitions */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+    }
+}
