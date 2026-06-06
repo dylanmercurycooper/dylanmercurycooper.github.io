@@ -19,19 +19,19 @@
 /* Light theme — default values */
 :root {
     /* Colours */
-    --bg: #fcf2eb;
-    --bg-alt: #f4e8de;
-    --text: #1a1a1a;
-    --text-muted: #6a6a6a;
-    --accent: #b04a26;
-    --border: #d6c8b8;
+    --bg: #1f3a5f;
+    --bg-alt: #284670;
+    --text: #eef3f8;
+    --text-muted: #aebfd2;
+    --accent: #e9c08a;
+    --border: #3a5680;
 
     /* Typography */
-    --font-serif: 'Newsreader', Georgia, 'Times New Roman', serif;
-    --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-serif: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-sans: 'Montserrat', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
 
     /* Type scale (fluid: scales between min and max based on viewport) */
-    --type-h1: clamp(2.25rem, 5vw + 1rem, 3.75rem);
+    --type-h1: clamp(1.75rem, 4vw + 0.5rem, 3rem);
     --type-h2: clamp(1.4rem, 2vw + 0.8rem, 2rem);
     --type-h3: clamp(1.15rem, 1vw + 0.9rem, 1.4rem);
     --type-body: 1rem;
@@ -59,12 +59,12 @@
 
 /* Dark theme — overrides only the colour tokens */
 [data-theme="dark"] {
-    --bg: #1d1815;
-    --bg-alt: #2a221d;
-    --text: #ededed;
-    --text-muted: #9a9a9a;
-    --accent: #e89878;
-    --border: #312820;
+    --bg: #081120;
+    --bg-alt: #121d31;
+    --text: #e6edf5;
+    --text-muted: #9fb0c6;
+    --accent: #e9c08a;
+    --border: #1d2b42;
     --shadow-hover: 0 6px 18px rgba(0, 0, 0, 0.4);
 }
 
@@ -130,6 +130,7 @@ h1, h2, h3, h4 {
 h1 {
     font-size: var(--type-h1);
     letter-spacing: -0.02em;
+    white-space: nowrap;
 }
 
 h2 {
@@ -425,7 +426,9 @@ h2 .heading-icon {
    ------------------------------------------------------------ */
 
 .page-intro {
-    margin-bottom: var(--space-7);
+    margin-bottom: var(--space-5);
+    padding-bottom: var(--space-4);
+    border-bottom: 1px solid var(--border);
 }
 
 .page-intro h1 {
