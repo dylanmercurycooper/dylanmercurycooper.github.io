@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<!--
+    REVIEW / THINK-PIECE TEMPLATE
+    To use:
+    1. Duplicate this file in Finder. Rename the copy to the movie's name,
+       lowercase with hyphens (e.g., parasite.html, the-shining.html).
+    2. Open the copy in VS Code.
+    3. Edit the FIVE marked spots below (search for "EDIT:").
+    4. Paste the pandoc-converted HTML body between the
+       "REVIEW BODY START" and "REVIEW BODY END" comments.
+    5. Double-click the file in Finder to preview in your browser.
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- EDIT: page title shown in the browser tab -->
+    <title>MOVIE TITLE (YEAR) — Dylan Mercury Cooper</title>
+    <!-- EDIT: one-sentence description used by search engines and link previews -->
+    <meta name="description" content="MOVIE TITLE (YEAR) — short description by Dylan Mercury Cooper.">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="MOVIE TITLE (YEAR) — Dylan Mercury Cooper">
+    <meta property="og:description" content="MOVIE TITLE (YEAR) — short description by Dylan Mercury Cooper.">
+    <!-- EDIT: change the filename at the end of this URL to match your new file -->
+    <meta property="og:url" content="https://dylanmercurycooper.github.io/movies/movie-title.html">
+
+    <link rel="icon" href="../assets/images/favicon.svg" type="image/svg+xml">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap">
+
+    <link rel="stylesheet" href="../styles.css">
+
+    <script>
+        (function () {
+            const stored = localStorage.getItem('theme');
+            const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const theme = stored || (systemDark ? 'dark' : 'light');
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+</head>
+<body>
+    <header class="site-header">
+        <a href="../movies.html" class="back-link">← Back to movies</a>
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode" type="button">
+            <!-- Icon set by JS -->
+        </button>
+    </header>
+
+    <main class="container">
+        <article class="movie-piece">
+            <header class="movie-piece-header">
+                <!-- EDIT: the movie's title and year -->
+                <h1>MOVIE TITLE (YEAR)</h1>
+                <!-- EDIT: the date you wrote this, and "review" or "think-piece" -->
+                <p class="movie-piece-meta">Written YYYY-MM-DD &middot; review</p>
+            </header>
+
+            <!-- REVIEW BODY START -->
+            <!-- Paste the pandoc-converted HTML between this and the END marker below. -->
+
+            <!-- REVIEW BODY END -->
+
+        </article>
+    </main>
+
+    <footer class="site-footer">
+        <p class="footer-links">
+            <a href="https://scholar.google.com/citations?user=gKkSlZQAAAAJ&amp;hl=en" target="_blank" rel="noopener noreferrer">Google Scholar</a>
+            <span class="footer-divider" aria-hidden="true">&middot;</span>
+            <a href="https://osf.io/c2bzq/" target="_blank" rel="noopener noreferrer">OSF</a>
+            <span class="footer-divider" aria-hidden="true">&middot;</span>
+            <a href="https://github.com/dylanmercurycooper" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </p>
+    </footer>
+
+    <script src="../script.js"></script>
+</body>
+</html>

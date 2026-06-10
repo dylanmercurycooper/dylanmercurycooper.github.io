@@ -882,6 +882,7 @@ h2 .heading-icon {
 
 .footer-links {
     display: flex;
+    justify-content: center;
     gap: var(--space-2);
     align-items: center;
     margin: 0;
@@ -911,5 +912,196 @@ h2 .heading-icon {
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
         scroll-behavior: auto !important;
+    }
+}
+
+
+/* 12. Movies — index list + review/think-piece pages
+   ------------------------------------------------------------ */
+
+/* --- Index list (movies.html) --- */
+.movies-list {
+    margin-bottom: var(--space-7);
+}
+
+.movie-entry {
+    padding: var(--space-4) 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.movie-entry:first-child {
+    padding-top: 0;
+}
+
+.movie-entry:last-child {
+    border-bottom: none;
+}
+
+.movie-entry h2 {
+    font-size: var(--type-h3);
+    margin: 0 0 var(--space-1);
+}
+
+.movie-entry h2 a {
+    color: var(--text);
+    text-decoration: none;
+    transition: color var(--transition);
+}
+
+.movie-entry h2 a:hover {
+    color: var(--accent);
+}
+
+.movie-meta {
+    font-size: var(--type-small);
+    color: var(--text-muted);
+    margin: 0 0 var(--space-2);
+}
+
+.movie-teaser {
+    line-height: 1.6;
+    color: var(--text);
+    max-width: 60ch;
+    margin: 0;
+}
+
+.movies-empty {
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+/* --- Review / think-piece page --- */
+.movie-piece {
+    margin-bottom: var(--space-7);
+}
+
+.movie-piece-header {
+    display: flex;
+    gap: var(--space-5);
+    align-items: flex-start;
+    margin-bottom: var(--space-5);
+    padding-bottom: var(--space-4);
+    border-bottom: 1px solid var(--border);
+}
+
+.movie-cover {
+    flex-shrink: 0;
+    width: 200px;
+    height: auto;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-hover);
+}
+
+.movie-piece-headline {
+    display: flex;
+    flex-direction: column;
+}
+
+.movie-piece-kicker {
+    font-size: var(--type-small);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    margin: 0 0 var(--space-2);
+}
+
+/* The date sits beside the "Review" label but in muted grey, so it
+   reads clearly as when the review was written — not the film. */
+.movie-piece-kicker-date {
+    color: var(--text-muted);
+}
+
+.movie-piece-headline h1 {
+    /* Slightly smaller than a normal page h1 so "Obsession — 9/10"
+       sits comfortably on one line next to the rating. */
+    font-size: clamp(1.5rem, 3vw + 0.6rem, 2.25rem);
+    /* Optical nudge: the round capital "O" carries more built-in
+       left side-bearing than the flat-left letters above and below,
+       so it reads as slightly indented. Pull it back a hair to align. */
+    text-indent: -0.04em;
+    margin: 0 0 var(--space-2);
+}
+
+/* Title links out to IMDb but still reads as a heading: inherits the
+   heading colour with a faint underline, turning gold on hover. */
+.movie-piece-headline h1 a {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-color: var(--text-muted);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
+    transition: color var(--transition), text-decoration-color var(--transition);
+}
+
+.movie-piece-headline h1 a:hover {
+    color: var(--accent);
+    text-decoration-color: var(--accent);
+}
+
+.movie-piece-meta {
+    font-size: var(--type-small);
+    color: var(--text-muted);
+    margin: 0;
+}
+
+/* Rating sits inline in the heading: "— 9/10". The score is larger
+   than the "/10", mirroring the original badge. */
+.movie-rating {
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.movie-rating-sep {
+    color: var(--text-muted);
+    font-weight: 500;
+    font-size: 0.65em;
+}
+
+.movie-rating-score {
+    color: var(--accent);
+    font-size: 0.85em;
+}
+
+.movie-rating-max {
+    color: var(--text-muted);
+    font-size: 0.6em;
+}
+
+.movie-piece-body p {
+    font-size: 1.0625rem;
+    line-height: 1.8;
+    color: var(--text);
+    max-width: 68ch;
+    margin: 0 0 var(--space-4);
+    text-align: justify;
+}
+
+.movie-piece-body p:last-child {
+    margin-bottom: 0;
+}
+
+.movie-cover-credit {
+    margin-top: var(--space-5);
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--border);
+    font-size: var(--type-small);
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+/* Stack the poster above the headline on narrow screens */
+@media (max-width: 560px) {
+    .movie-piece-header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .movie-cover {
+        width: 180px;
+    }
+
+    .movie-piece-body p {
+        text-align: left;
     }
 }

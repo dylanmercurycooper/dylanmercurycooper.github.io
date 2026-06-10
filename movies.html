@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Movies — Dylan Mercury Cooper</title>
+    <meta name="description" content="Reviews and think-pieces on films by Dylan Mercury Cooper.">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Movies — Dylan Mercury Cooper">
+    <meta property="og:description" content="Reviews and think-pieces on films by Dylan Mercury Cooper.">
+    <meta property="og:url" content="https://dylanmercurycooper.github.io/movies.html">
+
+    <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap">
+
+    <link rel="stylesheet" href="styles.css">
+
+    <script>
+        (function () {
+            const stored = localStorage.getItem('theme');
+            const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const theme = stored || (systemDark ? 'dark' : 'light');
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+</head>
+<body>
+    <header class="site-header">
+        <a href="index.html" class="back-link">← Back to home</a>
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode" type="button">
+            <!-- Icon set by JS -->
+        </button>
+    </header>
+
+    <main class="container">
+        <section class="page-intro">
+            <h1>
+                <svg class="heading-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4 3h16v2H4zm0 6h16v2H4zM2 5h2v14H2zm18 0h2v14h-2zM4 19h16v2H4zM18 7h-2v2h2zm-8 0H8v2h2zm6-2h-2v2h2zM8 5H6v2h2z"/></svg>
+                Movies
+            </h1>
+            <p>I&rsquo;m an avid movie-goer and may be classed as a cinephile, so it is only fitting for a section of my website to cover my passion for movies. Here, I plan on sharing reviews of movies I&rsquo;ve watched and discussing how their themes relate to my life. And yes, be wary of SPOILERS!!!</p>
+        </section>
+
+        <section class="movies-list" aria-label="Movie pieces">
+            <!--
+            To add a new piece, copy the <article> block below and update:
+              - the href to point at the new piece's HTML file (e.g., movies/parasite.html)
+              - the title and year
+              - the date and type (review / think-piece)
+              - the teaser line
+
+            <article class="movie-entry">
+                <h2><a href="movies/movie-title.html">Movie Title (Year)</a></h2>
+                <p class="movie-meta">Written YYYY-MM-DD &middot; review</p>
+                <p class="movie-teaser">One-line teaser about the piece.</p>
+            </article>
+            -->
+
+            <article class="movie-entry">
+                <h2><a href="movies/obsession.html">Obsession Review - 9/10</a></h2>
+                <p class="movie-meta">Director: Curry Barker</p>
+                <p class="movie-teaser">Curry Barker&rsquo;s wish-gone-wrong horror, and what it has to say about autonomy, the uncanny valley effect, and the particular dread of an unpredictable mind.</p>
+            </article>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <p class="footer-links">
+            <a href="https://scholar.google.com/citations?user=gKkSlZQAAAAJ&amp;hl=en" target="_blank" rel="noopener noreferrer">Google Scholar</a>
+            <span class="footer-divider" aria-hidden="true">&middot;</span>
+            <a href="https://osf.io/c2bzq/" target="_blank" rel="noopener noreferrer">OSF</a>
+            <span class="footer-divider" aria-hidden="true">&middot;</span>
+            <a href="https://github.com/dylanmercurycooper" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
