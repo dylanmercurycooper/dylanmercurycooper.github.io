@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  SITEMAP
+  A plain list of every page on this site, for search engines.
+
+  WHY IT EXISTS: without it, a crawler finds pages only by following links,
+  and re-visits on its own schedule - which for a small site can be weeks.
+  The <lastmod> date is a direct signal saying "this page changed, read it again".
+
+  MAINTENANCE: update the <lastmod> date for a page when you meaningfully
+  change its content. If you forget, nothing breaks - the signal just goes stale.
+-->
+
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- Homepage -->
+  <url>
+    <loc>https://dylanmercurycooper.github.io/</loc>
+    <lastmod>2026-09-04</lastmod>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Research directions -->
+  <url>
+    <loc>https://dylanmercurycooper.github.io/research-directions.html</loc>
+    <lastmod>2026-09-04</lastmod>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Music -->
+  <url>
+    <loc>https://dylanmercurycooper.github.io/mymusic.html</loc>
+    <lastmod>2026-09-04</lastmod>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- Movies -->
+  <url>
+    <loc>https://dylanmercurycooper.github.io/movies.html</loc>
+    <lastmod>2026-09-04</lastmod>
+    <priority>0.6</priority>
+  </url>
+
+</urlset>

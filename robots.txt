@@ -1,0 +1,128 @@
+# robots.txt
+#
+# WHAT THIS IS FOR:
+# Automated programs called "crawlers" or "bots" visit websites and read them.
+# Some are useful to you (Google's crawler is how you appear in search results).
+# Some are not (crawlers that collect text and audio to train AI models).
+# This file is how a site tells them apart and says which is which.
+#
+# IMPORTANT — this is an HONOUR SYSTEM, not a lock.
+# Nothing here physically prevents anything. A crawler has to choose to obey.
+# Large, well-known companies generally do obey, because being caught ignoring
+# robots.txt is a legal and reputational problem for them. Anonymous scrapers
+# do not obey and this file will not stop them.
+#
+# The line below every "User-agent:" applies only to that named crawler.
+# A crawler reads ONLY the block that names it, and ignores the rest.
+
+
+# ------------------------------------------------------------------
+# 1. EVERYONE NOT NAMED BELOW — welcome.
+#    This covers Google Search, Bing, and ordinary web crawlers.
+#    You WANT these: they are how people find you by name.
+# ------------------------------------------------------------------
+User-agent: *
+Allow: /
+
+
+# ------------------------------------------------------------------
+# 2. AI TRAINING CRAWLERS — not welcome.
+#    "Disallow: /" means "read nothing at all on this site".
+#    These collect content to train models.
+# ------------------------------------------------------------------
+
+# OpenAI's training crawler
+User-agent: GPTBot
+Disallow: /
+
+# Anthropic's crawlers
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: Claude-Web
+Disallow: /
+
+# Common Crawl — a large public web archive that many AI datasets are built from.
+# Blocking this one is unusually high-value: it feeds lots of downstream training sets.
+User-agent: CCBot
+Disallow: /
+
+# Google's AI-training crawler.
+# NOTE: this is SEPARATE from Google Search. Blocking "Google-Extended" keeps you
+# out of Gemini training WITHOUT affecting how you rank in ordinary Google results.
+# Google built this specifically so sites could opt out of one but not the other.
+User-agent: Google-Extended
+Disallow: /
+
+# Apple's equivalent — same pattern. "Applebot-Extended" is training;
+# plain "Applebot" is Siri/Spotlight search and is left allowed above.
+User-agent: Applebot-Extended
+Disallow: /
+
+# ByteDance (TikTok's parent company)
+User-agent: Bytespider
+Disallow: /
+
+# Meta
+User-agent: Meta-ExternalAgent
+Disallow: /
+
+User-agent: FacebookBot
+Disallow: /
+
+# Amazon
+User-agent: Amazonbot
+Disallow: /
+
+# Others that collect for training or resale of datasets
+User-agent: cohere-ai
+Disallow: /
+
+User-agent: Diffbot
+Disallow: /
+
+User-agent: Omgilibot
+Disallow: /
+
+User-agent: ImagesiftBot
+Disallow: /
+
+User-agent: PerplexityBot
+Disallow: /
+
+
+# ------------------------------------------------------------------
+# 3. AI SEARCH ASSISTANTS — deliberately ALLOWED.
+#    These fetch pages to ANSWER a question someone asked, rather than
+#    to train a model. Increasingly people look someone up by asking an
+#    assistant instead of searching. Leaving these allowed means the
+#    answer they get comes from YOUR page rather than from stale
+#    third-party profiles.
+#
+#    Listed explicitly so the choice is visible and easy to reverse:
+#    change "Allow: /" to "Disallow: /" on any of them.
+# ------------------------------------------------------------------
+
+# OpenAI's search indexer (distinct from GPTBot, which trains)
+User-agent: OAI-SearchBot
+Disallow:
+
+# Fetches made because a ChatGPT user asked about a specific page
+User-agent: ChatGPT-User
+Disallow:
+
+# Fetches made because a Claude user asked about a specific page
+User-agent: Claude-User
+Disallow:
+
+
+# ------------------------------------------------------------------
+# 4. SITEMAP
+#    A list of every page on the site, so crawlers do not have to
+#    discover pages by following links, and so they know when a page
+#    last changed.
+# ------------------------------------------------------------------
+Sitemap: https://dylanmercurycooper.github.io/sitemap.xml
