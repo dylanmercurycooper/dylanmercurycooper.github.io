@@ -35,11 +35,26 @@
     <priority>0.6</priority>
   </url>
 
-  <!-- Movies -->
+  <!-- Movies index -->
   <url>
     <loc>https://dylanmercurycooper.github.io/movies.html</loc>
-    <lastmod>2026-09-04</lastmod>
+    <lastmod>2026-09-25</lastmod>
     <priority>0.6</priority>
+  </url>
+
+  <!-- Individual reviews. Lower priority than the index that lists them:
+       priority is a RELATIVE hint about which of your own pages matter most,
+       not a claim about ranking against other sites. -->
+  <url>
+    <loc>https://dylanmercurycooper.github.io/movies/resident-evil.html</loc>
+    <lastmod>2026-09-25</lastmod>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://dylanmercurycooper.github.io/movies/obsession.html</loc>
+    <lastmod>2026-06-10</lastmod>
+    <priority>0.5</priority>
   </url>
 
 </urlset>
