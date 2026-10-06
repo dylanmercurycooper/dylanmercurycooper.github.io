@@ -16,3 +16,6 @@
 # Claude Code state
 .claude/
 palette-preview.html
+
+# Private drafts
+research-directions.md
