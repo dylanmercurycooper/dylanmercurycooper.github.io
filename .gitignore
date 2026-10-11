@@ -38,12 +38,22 @@ fotos/
 # "!" line for its video and its poster, and add its slide to mymusic.html.
 /assets/videos/*
 !/assets/videos/lifes-incredible-again.mp4
+!/assets/videos/mary-jane.mp4
 !/assets/videos/shedding.mp4
+!/assets/videos/ethan-french-cover.mp4
+!/assets/videos/lccm-jam.mp4
+!/assets/videos/summerwalker.mp4
+!/assets/videos/lccm-performance.mp4
 
 # Video posters follow the same rule (movie posters are unaffected)
 /assets/images/*-poster.jpg
 !/assets/images/lifes-incredible-again-poster.jpg
+!/assets/images/mary-jane-poster.jpg
 !/assets/images/shedding-poster.jpg
+!/assets/images/ethan-french-cover-poster.jpg
+!/assets/images/lccm-jam-poster.jpg
+!/assets/images/summerwalker-poster.jpg
+!/assets/images/lccm-performance-poster.jpg
 !/assets/images/obsession-poster.jpg
 !/assets/images/the-green-knight-poster.jpg
 !/assets/images/resident-evil-poster.png
