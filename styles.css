@@ -484,6 +484,207 @@ h2 .heading-icon {
 /* 12. Music page — scoring videos and track list
    ------------------------------------------------------------ */
 
+/* Drum videos: self-hosted, portrait (phone-shaped) clips */
+.drum-videos {
+    margin-bottom: var(--space-7);          /* same gap below as the Scoring section */
+}
+
+.drum-videos h2 {
+    font-size: var(--type-h3);              /* match the other section headings */
+    margin-bottom: var(--space-4);
+}
+
+/* The carousel: the current clip on the left at full brightness,
+   the next clip peeking in on the right, faded */
+.drum-carousel {
+    container-type: inline-size;            /* lets the parts inside measure the carousel's width ("cqw" units) */
+    --slide-w: min(360px, 78cqw);           /* width of one slide; 78cqw = 78% of the carousel (phones: the next one still peeks in) */
+    --slide-gap: var(--space-4);            /* space between slides */
+    position: relative;                     /* lets the arrows sit on top of the slides */
+}
+
+/* The track: all slides in one long row, wider than the column.
+   "scroll-snap" makes a swipe always come to rest exactly on a slide. */
+.drum-carousel-track {
+    display: flex;                          /* slides in a row */
+    gap: var(--slide-gap);
+    overflow-x: auto;                       /* the row can be scrolled/swiped sideways */
+    scroll-snap-type: x mandatory;          /* always settle on a whole slide */
+    scroll-behavior: smooth;                /* glide, don't jump, when an arrow is clicked */
+    scrollbar-width: none;                  /* hide the scrollbar (Firefox) */
+}
+
+.drum-carousel-track::-webkit-scrollbar {
+    display: none;                          /* hide the scrollbar (Chrome, Safari) */
+}
+
+/* An invisible spacer after the last slide. Without it, the row would
+   run out before the last clip could slide all the way to the left. */
+.drum-carousel-track::after {
+    content: '';
+    flex: 0 0 calc(100% - var(--slide-w) - var(--slide-gap));
+}
+
+.drum-video {
+    position: relative;                     /* lets the big play button sit on top of the video */
+    flex: 0 0 var(--slide-w);               /* every slide is exactly the same width */
+    scroll-snap-align: start;               /* the point a swipe snaps to */
+    margin: 0;
+    padding: 0;
+    transition: opacity var(--transition);
+}
+
+/* Fade every clip except the current one. (Only once script.js has
+   marked which one is current, so without JS nothing is faded.) */
+.drum-carousel.is-ready .drum-video:not(.is-current) {
+    opacity: 0.35;
+    cursor: pointer;                        /* clicking a faded clip brings it forward */
+}
+
+.drum-carousel.is-ready .drum-video:not(.is-current):hover {
+    opacity: 0.5;                           /* brighten a little on hover, as a hint */
+}
+
+/* Caption: your own words under a clip (optional; see mymusic.html).
+   Same look as the captions under the Bandcamp tracks. */
+.drum-video-caption {
+    margin-top: var(--space-3);
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--text);
+}
+
+/* Left/right arrows: round, see-through, on the middle of each edge */
+.drum-carousel-arrow {
+    position: absolute;
+    /* Halfway down the VIDEO, not the whole slide, so a caption underneath
+       doesn't push the arrows down. Video height = width × 16/9 (phone shape). */
+    top: calc(var(--slide-w) * 16 / 9 / 2);
+    transform: translateY(-50%);            /* centre the arrow on that line */
+    z-index: 2;                             /* above the video and its play button */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.55);
+    color: #fff;
+    cursor: pointer;
+    transition: opacity var(--transition), background var(--transition);
+}
+
+.drum-carousel-arrow svg {
+    width: 20px;
+    height: 20px;
+}
+
+.drum-carousel-arrow:hover {
+    background: rgba(0, 0, 0, 0.75);
+}
+
+.drum-carousel-arrow:focus-visible {
+    outline: 2px solid var(--accent);       /* visible ring for keyboard users */
+    outline-offset: 2px;
+}
+
+/* Both arrows sit on the current (bright) clip: one at its left edge,
+   one at its right edge, not out over the faded clip */
+.drum-carousel-prev { left: var(--space-2); }
+.drum-carousel-next { left: calc(var(--slide-w) - 36px - var(--space-2)); }
+
+/* On the first slide there's no "previous"; on the last, no "next" */
+.drum-carousel-arrow:disabled {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* The dots underneath: one per slide, the current one highlighted */
+.drum-carousel-dots {
+    max-width: var(--slide-w);              /* centred under the current clip, not the whole row */
+    display: flex;
+    justify-content: center;
+    gap: var(--space-2);
+    margin-top: var(--space-3);
+}
+
+.drum-carousel-dot {
+    width: 8px;
+    height: 8px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: var(--text-muted);
+    opacity: 0.4;                           /* faded = not the current slide */
+    cursor: pointer;
+    transition: opacity var(--transition), background var(--transition);
+}
+
+.drum-carousel-dot[aria-current="true"] {
+    background: var(--accent);              /* the current slide's dot */
+    opacity: 1;
+}
+
+/* Big round play button in the middle of the video.
+   The button covers the whole video, so clicking anywhere on it plays;
+   the round icon is just the visual cue in the centre. */
+.drum-video-play {
+    position: absolute;
+    inset: 0;                               /* stretch over the whole video */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    border-radius: var(--radius);
+}
+
+.drum-video-play[hidden] {
+    display: none;                          /* hidden once the video is playing */
+}
+
+.drum-video-play-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;                     /* a circle */
+    background: rgba(0, 0, 0, 0.55);        /* see-through dark, readable on any poster */
+    color: #fff;
+    transition: transform var(--transition), background var(--transition);
+}
+
+.drum-video-play-icon svg {
+    width: 28px;
+    height: 28px;
+    margin-left: 4px;                       /* nudge the triangle so it looks centred */
+}
+
+.drum-video-play:hover .drum-video-play-icon,
+.drum-video-play:focus-visible .drum-video-play-icon {
+    transform: scale(1.08);                 /* grow slightly on hover, like the YouTube thumbnails */
+    background: rgba(0, 0, 0, 0.7);
+}
+
+.drum-video-play:focus-visible {
+    outline: 2px solid var(--accent);       /* visible ring for keyboard users */
+    outline-offset: 2px;
+}
+
+.drum-video video {
+    display: block;
+    width: 100%;                            /* fill the figure's width... */
+    aspect-ratio: 9 / 16;                   /* ...and keep the tall phone shape, even before loading */
+    object-fit: cover;
+    background: var(--bg-alt);              /* placeholder colour if the poster hasn't loaded */
+    border-radius: var(--radius);           /* rounded corners, like the YouTube thumbnails */
+}
+
 .scoring-work {
     margin-bottom: var(--space-7);
 }

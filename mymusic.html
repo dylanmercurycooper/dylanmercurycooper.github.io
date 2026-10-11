@@ -49,6 +49,68 @@
             <p>Music is something I do alongside research. Below are some scoring projects and original tracks I've made over the years.</p>
         </section>
 
+        <section class="drum-videos" aria-label="Drum videos">
+            <h2>
+                <svg class="heading-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6 5h12v2H6zM4 7h2v10H4zm14 0h2v10h-2zM6 9h12v2H6zm0 8h12v2H6zM2 1h2v2H2zm2 2h2v2H4zm16-2h2v2h-2zm-2 2h2v2h-2z"/></svg>
+                Drums
+            </h2>
+
+            <!-- Each drum clip is a <figure> holding a <video>, the browser's built-in player.
+                 The video files live in assets/videos/ (small, web-ready copies);
+                 the still image shown before play lives in assets/images/.
+
+                 What each setting on <video> does:
+                   controls      show the play/pause/volume/full-screen buttons
+                   playsinline   on iPhones, play inside the page instead of jumping to full screen
+                   preload="none"  don't download anything until the visitor presses play
+                                   (keeps the page fast; the poster image fills the gap)
+                   poster        the still image shown before playing
+                   disablepictureinpicture   no "pop out into a floating window" option
+                   controlslist="nodownload noplaybackrate"
+                                 hide the download button and the playback-speed menu
+                                 (full screen stays). These are requests to the browser:
+                                 Chrome/Edge follow them fully; Safari shows fewer extras anyway.
+                                 They tidy the controls; they don't stop anyone saving a video.
+
+                 The clips sit in a carousel (like an Instagram slide post): one video
+                 visible at a time, all the same size. The order here is the order of
+                 the slides, so the first <figure> is the first slide.
+
+                 script.js adds:
+                   - section 5: a big play button in the middle of each video
+                   - section 6: the left/right arrows and the dots underneath
+                 If JavaScript is off, the row can still be swiped/scrolled sideways
+                 and the normal "controls" still work, so nothing breaks.
+
+                 To add a clip: copy one <figure> block inside "drum-carousel-track"
+                 and change the poster, the src, and the aria-label.
+
+                 To add a caption (your own words under a clip): inside that clip's
+                 <figure>, add this line just under </video>, with your text:
+                     <figcaption class="drum-video-caption">Your text</figcaption>
+                 Captions fade with their clip, and can be different lengths. -->
+
+            <div class="drum-carousel" aria-roledescription="carousel" aria-label="Drum videos">
+                <div class="drum-carousel-track">
+                    <figure class="drum-video">
+                        <video controls playsinline preload="none" disablepictureinpicture controlslist="nodownload noplaybackrate"
+                               poster="assets/images/lifes-incredible-again-poster.jpg"
+                               aria-label="Drum video: Life's Incredible Again by Michael Giacchino">
+                            <source src="assets/videos/lifes-incredible-again.mp4" type="video/mp4">
+                        </video>
+                    </figure>
+
+                    <figure class="drum-video">
+                        <video controls playsinline preload="none" disablepictureinpicture controlslist="nodownload noplaybackrate"
+                               poster="assets/images/shedding-poster.jpg"
+                               aria-label="Drum video: shedding">
+                            <source src="assets/videos/shedding.mp4" type="video/mp4">
+                        </video>
+                    </figure>
+                </div>
+            </div>
+        </section>
+
         <section class="scoring-work" aria-label="Scoring work">
             <h2>
                 <svg class="heading-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4 3h16v2H4zM2 5h2v10H2zm2 10h16v2H4zM20 5h2v10h-2zM6 19h12v2H6zm3-2h2v2H9zm4 0h2v2h-2z"/></svg>

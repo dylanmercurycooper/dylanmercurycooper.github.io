@@ -19,3 +19,31 @@ palette-preview.html
 
 # Private drafts
 research-directions.md
+
+# Original photos and videos (full-size, may contain private info).
+# Only small, web-ready copies in assets/ get committed.
+# The leading "/" means "only the folder at the top of the project",
+# so assets/videos/ is NOT caught by this rule.
+/fotos/
+/videos/
+
+# Private drafts folder (e.g. drum slides not published yet)
+/drafts/
+
+# All photos/images in any folder called "fotos", wherever it is
+fotos/
+
+# Web videos: ALLOW-LIST. Every video in assets/videos/ is ignored,
+# except the ones named with "!" below. To publish a new clip, add a
+# "!" line for its video and its poster, and add its slide to mymusic.html.
+/assets/videos/*
+!/assets/videos/lifes-incredible-again.mp4
+!/assets/videos/shedding.mp4
+
+# Video posters follow the same rule (movie posters are unaffected)
+/assets/images/*-poster.jpg
+!/assets/images/lifes-incredible-again-poster.jpg
+!/assets/images/shedding-poster.jpg
+!/assets/images/obsession-poster.jpg
+!/assets/images/the-green-knight-poster.jpg
+!/assets/images/resident-evil-poster.png

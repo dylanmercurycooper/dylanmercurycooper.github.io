@@ -7,6 +7,8 @@
      2. Email button (assembles mailto on click; address not in HTML)
      3. YouTube thumbnail fallback (high-res to medium-res)
      4. Custom audio player (Spitfire-style controls per track)
+     5. Drum videos (big centre play button; one video at a time)
+     6. Drum video carousel (arrows + dots; one slide at a time)
    ============================================================ */
 
 
@@ -339,5 +341,200 @@
        and wrap it. */
     document.querySelectorAll('audio.audio-player').forEach(function (audio) {
         new AudioPlayer(audio);
+    });
+})();
+
+
+/* 5. Drum videos
+   ------------------------------------------------------------
+   Each <video> inside a .drum-video figure starts with the
+   browser's own small controls (so it still works without JS).
+
+   This script:
+     - hides those small controls before playing
+     - adds a big round play button over the middle of the video
+     - on click: shows the normal controls, hides the big button, plays
+     - when a video finishes, brings the big button back
+     - only lets one drum video play at a time
+*/
+
+(function () {
+    'use strict';
+
+    const PLAY_ICON = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>';
+
+    // Find every drum video on the page (none on other pages → stop here)
+    const videos = document.querySelectorAll('.drum-video video');
+    if (!videos.length) return;
+
+    videos.forEach(function (video) {
+        // Hide the small built-in controls until the visitor presses play
+        video.controls = false;
+
+        // Build the big button: a full-size clickable area with a round icon in the middle
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'drum-video-play';
+        button.setAttribute('aria-label', 'Play ' + (video.getAttribute('aria-label') || 'video'));
+        button.innerHTML = '<span class="drum-video-play-icon">' + PLAY_ICON + '</span>';
+
+        // Put the button inside the same <figure> as the video, on top of it
+        video.parentNode.appendChild(button);
+
+        // Click → show normal controls, hide the big button, start playing
+        button.addEventListener('click', function () {
+            video.controls = true;
+            button.hidden = true;
+            video.play();
+        });
+
+        // Whenever this video starts, pause every other drum video
+        video.addEventListener('play', function () {
+            videos.forEach(function (other) {
+                if (other !== video) other.pause();
+            });
+        });
+
+        // When the video reaches the end, go back to the big-button look
+        video.addEventListener('ended', function () {
+            video.controls = false;
+            button.hidden = false;
+        });
+    });
+})();
+
+
+/* 6. Drum video carousel
+   ------------------------------------------------------------
+   The HTML is just a row of slides that can be scrolled sideways;
+   the CSS makes only one slide fit at a time and snaps to each.
+
+   This script adds:
+     - left/right arrow buttons (hidden at the first/last slide)
+     - one dot per slide underneath, highlighting the current one
+     - pausing a video when you move away from its slide
+   Swiping on a phone or trackpad works on its own (that's the CSS).
+*/
+
+(function () {
+    'use strict';
+
+    const LEFT_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>';
+    const RIGHT_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>';
+
+    document.querySelectorAll('.drum-carousel').forEach(function (carousel) {
+        const track = carousel.querySelector('.drum-carousel-track');
+        const slides = track.querySelectorAll('.drum-video');
+        if (slides.length < 2) return;      // one clip → no arrows or dots needed
+
+        // Label each slide for screen readers: "1 of 3", "2 of 3", ...
+        slides.forEach(function (slide, i) {
+            slide.setAttribute('aria-roledescription', 'slide');
+            slide.setAttribute('aria-label', (i + 1) + ' of ' + slides.length);
+        });
+
+        // Build an arrow button (direction: -1 = previous, +1 = next)
+        function makeArrow(className, label, icon, direction) {
+            const arrow = document.createElement('button');
+            arrow.type = 'button';
+            arrow.className = 'drum-carousel-arrow ' + className;
+            arrow.setAttribute('aria-label', label);
+            arrow.innerHTML = icon;
+            arrow.addEventListener('click', function () {
+                goTo(currentIndex() + direction);
+            });
+            carousel.appendChild(arrow);
+            return arrow;
+        }
+
+        const prev = makeArrow('drum-carousel-prev', 'Previous video', LEFT_ICON, -1);
+        const next = makeArrow('drum-carousel-next', 'Next video', RIGHT_ICON, +1);
+
+        // Build the row of dots, one per slide; clicking a dot jumps to that slide
+        const dotsRow = document.createElement('div');
+        dotsRow.className = 'drum-carousel-dots';
+        const dots = Array.prototype.map.call(slides, function (_, i) {
+            const dot = document.createElement('button');
+            dot.type = 'button';
+            dot.className = 'drum-carousel-dot';
+            dot.setAttribute('aria-label', 'Go to video ' + (i + 1));
+            dot.addEventListener('click', function () { goTo(i); });
+            dotsRow.appendChild(dot);
+            return dot;
+        });
+        carousel.appendChild(dotsRow);
+
+        // Distance from the start of one slide to the start of the next
+        // (slide width + the gap between them), measured from the page
+        function step() {
+            return slides[1].offsetLeft - slides[0].offsetLeft;
+        }
+
+        // Which slide is showing? (how far we've scrolled ÷ one step)
+        function currentIndex() {
+            return Math.round(track.scrollLeft / step());
+        }
+
+        // Scroll to slide number i (kept within the first and last slide)
+        function goTo(i) {
+            const target = Math.max(0, Math.min(slides.length - 1, i));
+            track.scrollTo({ left: target * step() });
+        }
+
+        // Clicking a faded clip brings it forward instead of playing it.
+        // "true" = catch the click on its way in, before the play button sees it.
+        slides.forEach(function (slide, i) {
+            slide.addEventListener('click', function (e) {
+                if (i !== currentIndex()) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    goTo(i);
+                }
+            }, true);
+        });
+
+        // Bring the arrows, dots and videos in line with the current slide
+        function update() {
+            const index = currentIndex();
+            prev.disabled = index === 0;
+            next.disabled = index === slides.length - 1;
+            dots.forEach(function (dot, i) {
+                dot.setAttribute('aria-current', i === index ? 'true' : 'false');
+            });
+            // Mark the current slide (the CSS fades all the others)
+            slides.forEach(function (slide, i) {
+                slide.classList.toggle('is-current', i === index);
+            });
+            // Pause any video that isn't on the visible slide
+            slides.forEach(function (slide, i) {
+                const video = slide.querySelector('video');
+                if (video && i !== index) video.pause();
+            });
+        }
+
+        // Re-check after every scroll (arrow click, dot click, or swipe).
+        // requestAnimationFrame waits for the next screen redraw, so we
+        // don't redo the work dozens of times during one smooth glide.
+        let pending = false;
+        track.addEventListener('scroll', function () {
+            if (pending) return;
+            pending = true;
+            requestAnimationFrame(function () {
+                pending = false;
+                update();
+            });
+        });
+
+        // Keyboard: left/right arrow keys move between slides while
+        // focus is inside the carousel, except on a video itself,
+        // where those keys skip backwards/forwards within the clip
+        carousel.addEventListener('keydown', function (e) {
+            if (e.target.tagName === 'VIDEO') return;
+            if (e.key === 'ArrowLeft') { e.preventDefault(); goTo(currentIndex() - 1); }
+            if (e.key === 'ArrowRight') { e.preventDefault(); goTo(currentIndex() + 1); }
+        });
+
+        update();                           // set the starting state (slide 1)
+        carousel.classList.add('is-ready'); // switch on the fading (see styles.css)
     });
 })();
