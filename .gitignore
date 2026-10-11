@@ -35,7 +35,7 @@ fotos/
 
 # Web videos: ALLOW-LIST. Every video in assets/videos/ is ignored,
 # except the ones named with "!" below. To publish a new clip, add a
-# "!" line for its video and its poster, and add its slide to mymusic.html.
+# "!" line for its video and its poster, and add its slide to music.html.
 /assets/videos/*
 !/assets/videos/lifes-incredible-again.mp4
 !/assets/videos/mary-jane.mp4

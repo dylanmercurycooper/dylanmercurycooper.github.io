@@ -545,13 +545,13 @@ h2 .heading-icon {
     opacity: 0.5;                           /* brighten a little on hover, as a hint */
 }
 
-/* Caption: your own words under a clip (optional; see mymusic.html).
+/* Caption: your own words under a clip (optional; see music.html).
    Same look as the captions under the Bandcamp tracks. */
 .drum-video-caption {
     margin-top: var(--space-3);
     font-size: 1rem;
     line-height: 1.6;
-    color: var(--text);
+    color: var(--text-muted);               /* a little dimmer than the main text; links stay gold */
 }
 
 /* Left/right arrows: round, see-through, on the middle of each edge */
